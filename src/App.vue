@@ -1,32 +1,49 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div>
+    <input placeholder="Insert a task" v-model="task" type="text" />
+    <button @click.prevent="insertTask">Add</button>
+    <ul v-for="task in todoList" :key="task.id">
+      <li
+        v-bind:class="{ 'completed-task': task.completed }"
+        :id="task.id"
+        @click="completeTask"
+      >{{ task.description }}</li>
+    </ul>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+  data() {
+    return {
+      todoList: [],
+      task: '',
+      id: null
+    }
+  },
+  methods: {
+    insertTask() {
+      this.todoList.push({
+        id: this.id + 1,
+        description: this.task,
+        completed: false
+      })
+      this.id++
+      this.task = ''
+    },
+    completeTask() {
+      const taskId = parseInt(event.target.id)
+      this.todoList.find(currentTask => {
+        if (currentTask.id === taskId) {
+          currentTask.completed = !currentTask.completed
+        }
+      })
+    }
+  }
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+</script>
+<style scoped>
+.completed-task {
+  text-decoration: line-through;
 }
 </style>
