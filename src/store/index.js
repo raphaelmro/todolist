@@ -21,7 +21,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    insertTask({ commit, state}, task) {
+    insertTask({ commit, state }, task) {
       if (task.description.length !== 0) {
         commit('INSERT_TASK', task)
         this.state.errorMessage = ''
