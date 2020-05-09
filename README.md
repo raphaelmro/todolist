@@ -2,7 +2,7 @@
 * Todo List in Vue to practice some fundamentals and familiarize the core principles of Vuex
 
 ## Screenshot
-
+![todolist-screenshot](https://user-images.githubusercontent.com/1179732/81486211-9f2c0c80-9229-11ea-9eab-0d5b33ec294d.jpg)
 ## Demo
 
 ## Requirements
