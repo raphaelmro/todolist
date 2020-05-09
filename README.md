@@ -9,6 +9,7 @@ Try!
 ## Requirements
 * Node
 * Vue
+* Vuetify
 
 ## Project setup
 1. Clone the repository 🐑 <br> `git clone https://github.com/raphaelmro/todolist.git`
