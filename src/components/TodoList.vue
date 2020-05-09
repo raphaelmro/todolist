@@ -1,18 +1,17 @@
 <template>
-  <div>
-    <ul v-for="task in todoList" :key="task.id">
-      <li
-        :class="{ 'completed-task': task.completed }"
-        :id="task.id"
-        @click="completeTask"
-      >
-        {{ task.description }}
-      </li>
-    </ul>
-    <span class="errorMessage" v-if="errorMessage.length > 0">
-      {{ errorMessage }}
-    </span>
-  </div>
+  <v-list v-if="todoListLength !== 0" width="300" class="mx-auto mt-5">
+    <v-subheader>My Tasks</v-subheader>
+    <v-list-item v-for="task in todoList" :key="task.id">
+      <v-list-item-content>
+        <v-list-item-title
+          :id="task.id"
+          :class="{ 'completed-task': task.completed }"
+          @click="completeTask"
+          v-html="task.description"
+        ></v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -21,9 +20,12 @@ export default {
   name: 'TodoList',
 
   computed: {
-    ...mapState(['todoList', 'errorMessage']),
+    ...mapState(['todoList']),
     completedTasks() {
       return this.$store.getters.completedTasks
+    },
+    todoListLength() {
+      return this.$store.getters.getTodoListLength
     }
   },
   methods: {
@@ -35,9 +37,6 @@ export default {
 }
 </script>
 <style scoped>
-.errorMessage {
-  color: red;
-}
 .completed-task {
   text-decoration: line-through;
 }

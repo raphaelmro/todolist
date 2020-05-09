@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-app>
     <TodoForm />
     <TodoList />
-  </div>
+  </v-app>
 </template>
 
 <script>

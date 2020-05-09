@@ -40,6 +40,9 @@ export default new Vuex.Store({
     },
     getTaskById: state => id => {
       return state.todoList.find(task => task.id === id)
+    },
+    getTodoListLength(state) {
+      return state.todoList.length
     }
   }
 })
