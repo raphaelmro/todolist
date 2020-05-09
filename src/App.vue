@@ -14,7 +14,8 @@
         {{ task.description }}
       </li>
     </ul>
-    <span class="errorMessage" v-if="errorMessage">Insert a task!</span>
+    <span class="errorMessage" v-if="errorMessage.length > 0">{{ errorMessage }}</span>
+    {{ completedTasks }}
   </div>
 </template>
 
@@ -25,27 +26,24 @@ export default {
   data() {
     return {
       task: '',
-      errorMessage: false,
       id: null
     }
   },
   computed: {
-    ...mapState(['todoList'])
+    ...mapState(['todoList', 'errorMessage']),
+    completedTasks() {
+      return this.$store.getters.completedTasks
+    }
   },
   methods: {
     insertTask() {
-      if (this.task.length !== 0) {
-        this.errorMessage = false
-        this.$store.dispatch('insertTask', {
-          id: this.id + 1,
-          description: this.task,
-          completed: false
-        })
-        this.id = this.id + 1
-        this.task = ''
-      } else {
-        this.errorMessage = !this.errorMessage
-      }
+      this.$store.dispatch('insertTask', {
+        id: this.id + 1,
+        description: this.task,
+        completed: false
+      })
+      this.id = this.id + 1
+      this.task = ''
     },
     completeTask() {
       const taskId = parseInt(event.target.id)

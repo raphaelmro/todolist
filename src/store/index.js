@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todoList: []
+    todoList: [],
+    errorMessage: ''
   },
   mutations: {
     INSERT_TASK(state, task) {
@@ -20,11 +21,25 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    insertTask({ commit }, task) {
-      commit('INSERT_TASK', task)
+    insertTask({ commit, state}, task) {
+      if (task.description.length !== 0) {
+        commit('INSERT_TASK', task)
+        this.state.errorMessage = ''
+      } else {
+        this.state.errorMessage = 'Insert a task!'
+      }
     },
     completeTask({ state, commit }, taskId) {
+      this.state.errorMessage = ''
       commit('COMPLETE_TASK', taskId)
+    }
+  },
+  getters: {
+    completedTasks(state) {
+      return state.todoList.filter(task => task.completed)
+    },
+    getTaskById: state => id => {
+      return state.todoList.find(task => task.id === id)
     }
   }
 })
